@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Tasks</title></head>
+<body>
+<h2>All Tasks</h2>
+<a th:href="@{/admin/tasks/new}">Assign New Task</a>
+<table border="1">
+    <tr><th>ID</th><th>Description</th><th>Assigned To</th><th>Status</th></tr>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.id}"></td>
+        <td th:text="${task.description}"></td>
+        <td th:text="${task.assignedTo.name}"></td>
+        <td th:text="${task.status}"></td>
+    </tr>
+</table>
+</body>
+</html>

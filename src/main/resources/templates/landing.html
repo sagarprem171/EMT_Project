@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkNest - Employee Management</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <h1 class="logo">WorkNest</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="/employee/login">Sign In</a></li>
+                    <li><a href="/admin/login">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h2>Simplify Employee Management for Your Organization</h2>
+                <p>WorkNest is an all-in-one employee management system designed for small businesses and institutions — from restaurants to schools to retail stores.</p>
+                <div class="cta-buttons">
+                    <a href="/employee/register" class="btn primary">Try Demo</a>
+                    <a href="#contact" class="btn secondary">Request a Consultation</a>
+                </div>
+                <p class="hero-note">
+                    Managing employees shouldn't be a hassle. Whether you're running a restaurant, a school, a clinic, or a shop, WorkNest helps you streamline staff onboarding, verification, payroll, and reporting — all from a single, easy-to-use platform.
+                </p>
+            </div>
+            <div class="hero-image">
+                <img src="/images/image_01.png" alt="Employee Management Illustration">
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About WorkNest</h2>
+            <p>WorkNest is a modern employee management solution crafted for small and growing organizations. Our mission is to provide easy-to-use, affordable, and powerful software that simplifies the way teams are managed.</p>
+            <p>Designed with flexibility in mind, WorkNest adapts to the unique workflows of different industries — whether it's verifying staff in a school, managing shifts in a store, or rolling out payroll in a restaurant.</p>
+            <p class="values"><strong>Our Values:</strong> ✅ Simplicity &nbsp; ✅ Security &nbsp; ✅ Customizability &nbsp; ✅ Dedicated Support</p>
+        </div>
+    </section>
+
+    <section id="services" class="section">
+        <div class="container">
+            <h2>What WorkNest Offers</h2>
+            <ul class="services-list">
+                <li>👥 Employee Registration & Onboarding – Allow new staff to register and upload identity documents.</li>
+                <li>🛂 Admin Review & Approval – Secure panel for reviewing and approving employee profiles.</li>
+                <li>📝 Staff Directory Management – Easily update or delete employee records, assign roles, and monitor status.</li>
+                <li>📄 Payroll Generation – Automatically generate monthly salary reports and individual payslips.</li>
+                <li>🔐 Employee Self-Login – Let staff securely log in to access their payslips and profile.</li>
+                <li>📆 Reminder & Notification System – Set organization-specific alerts and task reminders.</li>
+                <li>📊 Reporting & Analytics – Quick insights into workforce size, payroll history, and activity logs.</li>
+            </ul>
+            <p class="tagline">Perfect for schools, clinics, shops, restaurants, and more.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2>Let's Connect</h2>
+            <p>Interested in using WorkNest for your business or institution? Have a question or want a live demo? We’d love to hear from you.</p>
+            <ul>
+                <li>📧 Email: support@worknest.in</li>
+                <li>📍 Location: Based in India</li>
+                <li>☎️ Phone: +91-XXXXXXXXXX</li>
+            </ul>
+            <form class="contact-form">
+                <input type="text" placeholder="Full Name" required>
+                <input type="text" placeholder="Organization Name">
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Message / Inquiry" rows="4" required></textarea>
+                <button type="submit" class="btn primary">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 WorkNest. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Verify OTP - WorkNest</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <div class="main-container">
+        <div class="form-container">
+            <h2>OTP Verification</h2>
+            <form th:action="@{/admin/send-otp}" method="post">
+                <input type="hidden" name="adminId" th:value="${adminId}" />
+                <input type="text" name="mobileNumber" th:value="${mobileNumber}" readonly />
+                <button type="submit">Send OTP</button>
+            </form>
+        </div>
+    </div>
+</body> 
+</html>

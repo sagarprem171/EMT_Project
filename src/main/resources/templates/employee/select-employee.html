@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Select Employee</title></head>
+<body>
+<h2>Select Your Name</h2>
+<ul>
+    <li th:each="emp : ${employees}">
+        <a th:href="@{/employee/{id}/tasks(id=${emp.id})}" th:text="${emp.name}"></a>
+    </li>
+</ul>
+</body>
+</html>

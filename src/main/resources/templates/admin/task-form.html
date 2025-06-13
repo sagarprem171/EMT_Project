@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Assign Task</title></head>
+<body>
+<h2>Assign New Task</h2>
+<form th:action="@{/admin/tasks}" th:object="${task}" method="post">
+    <label>Description:</label>
+    <input type="text" th:field="*{description}" /><br>
+    <label>Assign To:</label>
+    <select th:field="*{assignedTo}" >
+        <option th:each="emp : ${employees}" 
+                th:value="${emp}" 
+                th:text="${emp.name}">
+        </option>
+    </select><br>
+    <label>Status:</label>
+    <select th:field="*{status}">
+        <option value="PENDING">PENDING</option>
+        <option value="IN_PROGRESS">IN_PROGRESS</option>
+        <option value="COMPLETED">COMPLETED</option>
+        <option value="FAILED">FAILED</option>
+    </select><br>
+    <button type="submit">Assign</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Login - WorkNest EMS</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e9f0ff, #f3e7ff);
+        }
+
+        .header {
+            background-color: #4a4e91;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .login-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 40px 20px;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1.5px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #4a4e91;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4a4e91;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #383b77;
+        }
+
+        .forgot-link {
+            margin-top: 15px;
+            text-align: center;
+            display: block;
+            color: #4a4e91;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* OTP Modal */
+        .otp-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .otp-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 300px;
+        }
+
+        .otp-content input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .otp-content button {
+            margin-top: 10px;
+            width: 100%;
+            background-color: #4a4e91;
+            color: white;
+            padding: 10px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .otp-content .cancel-btn {
+            background-color: #aaa;
+        }
+
+        .otp-content .cancel-btn:hover {
+            background-color: #888;
+        }
+
+        .timer {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">WorkNest Employee Management System</div>
+
+    <div class="login-wrapper">
+        <div class="login-container">
+            <h2>Admin Login</h2>
+            <form th:action="@{/admin/validate}" method="post">
+                <label for="adminId">Admin ID</label>
+                <input type="text" id="adminId" name="adminId" placeholder="Enter Admin ID" required />
+
+                <label for="orgCode">Organization Code</label>
+                <input type="text" id="orgCode" name="orgCode" placeholder="Enter Organization Code" required />
+
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required />
+
+                <button type="submit">Login</button>
+                <p class="error-message" th:if="${error}" th:text="${error}"></p>
+            </form>
+            <a href="#" class="forgot-link">Forgot Password?</a>
+        </div>
+    </div>
+
+    <!-- OTP Modal -->
+    <div id="otpModal" class="otp-modal" th:classappend="${showOtpModal} ? '' : ' hidden'">
+        <div class="otp-content">
+            <h3>Enter OTP</h3>
+            <p>OTP sent to your registered mobile <span th:text="${mobileNumber}"></span></p>
+            <form id="otpForm" th:action="@{/admin/verify-otp}" method="post">
+                <input type="text" name="otp" id="otpInput" placeholder="Enter OTP" maxlength="6" required />
+                <button type="submit">Verify OTP</button>
+            </form>
+            <button class="cancel-btn" onclick="cancelOtp()">Cancel</button>
+            <p class="error-message" id="otpError" th:text="${otpError}"></p>
+            <p class="timer">Time remaining: <span id="timer">60</span>s</p>
+        </div>
+    </div>
+
+    <script>
+        let timeLeft = 60;
+        let timerId;
+
+        function startOtpTimer() {
+            const timerSpan = document.getElementById("timer");
+            timerId = setInterval(() => {
+                timeLeft--;
+                timerSpan.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    alert("OTP expired. Redirecting to login.");
+                    window.location.href = "/admin/login?error=OTP timeout.";
+                }
+            }, 1000);
+        }
+
+        function cancelOtp() {
+            window.location.href = "/admin/login";
+        }
+
+        window.onload = () => {
+            const modal = document.getElementById("otpModal");
+            if (!modal.classList.contains("hidden")) {
+                startOtpTimer();
+            }
+        };
+    </script>
+</body>
+</html>

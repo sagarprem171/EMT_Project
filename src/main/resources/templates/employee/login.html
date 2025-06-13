@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Employee Login - WorkNest</title>
+    <link rel="stylesheet" th:href="@{/css/employee-login.css}" />
+</head>
+<body>
+    <div class="login-container">
+        <h2>Employee Login</h2>
+
+        <!-- Display error if login fails -->
+        <p class="error-message" th:if="${error}" th:text="${error}"></p>
+
+        <form th:action="@{/employee/login}" method="post">
+            <input type="text" name="username" placeholder="Username" required autofocus />
+            <input type="password" name="password" placeholder="Password" required />
+            <button type="submit">Login</button>
+        </form>
+
+        <a href="#" class="forgot-link">Forgot Password?</a>
+        <a href="/employee/register" class="signup-link">New here? Create an account</a>
+    </div>
+</body>
+</html>
